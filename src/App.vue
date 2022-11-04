@@ -1,85 +1,33 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <RouterView/>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script setup lang="ts">
+import {RouterView} from 'vue-router'
+import {provide, reactive} from "vue"
+import type {Specification} from "@/interfaces/Specification"
+import {Color} from "@/interfaces/Color"
+import {data as defaultSpecs} from "./data";
+import {Engine} from "@/interfaces/Engine";
+import {WheelSize} from "@/interfaces/WheelSize";
+import {Material} from "@/interfaces/Material";
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+provide('store', reactive({
+    specs: <Specification[]>defaultSpecs,
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+    engines: <Engine[]>[Engine.Engine1,Engine.Engine2,Engine.Engine3,Engine.Engine4,Engine.Engine5],
+    interiorMaterials: <Material[]>[Material.Velour, Material.Leather, Material.Wood, Material.Suede, Material.Vinyl, Material.Wool],
+    colors: <Color[]>[Color.White, Color.Black, Color.Blue, Color.Red, Color.Green],
+    wheelSizes: <WheelSize[]>[WheelSize.Size10,WheelSize.Size12,WheelSize.Size14,WheelSize.Size16,WheelSize.Size18,WheelSize.Size20,WheelSize.Size22,WheelSize.Size24,WheelSize.Size26],
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
-}
-</style>
+    formStructure: [
+        { name: 'name', title: 'Name', type: String },
+        { name: 'engine', title: 'Engine', type: 'Engine' },
+        { name: 'interiorMaterials', title: 'Interior materials', type: 'Material' },
+        { name: 'color', title: 'Color', type: 'Color' },
+        { name: 'wheelSizes', title: 'Wheel size', type: 'WheelSize' },
+        { name: 'airSuspension', title: 'Air suspension', type: Boolean },
+        { name: 'signatureOnHood', title: 'Signature on hood', type: String },
+    ],
+}))
+</script>
