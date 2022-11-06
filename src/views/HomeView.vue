@@ -5,14 +5,13 @@
             <div class="card-body collapse" :class="spec.id === activeId ? 'show' : ''">
                 <table class="table table-bordered">
                     <tr v-for="item in Object.keys(spec).filter(i=>!['id', 'name'].includes(i))">
-                        <td>{{item}}</td>
+                        <td>{{getRowLabel(item)}}</td>
                         <td>{{spec[item]}}</td>
                     </tr>
                 </table>
                 <RouterLink :to="{name: 'spec', params: { id: spec.id }}" class="btn btn-primary">edit</RouterLink>
             </div>
         </div>
-
         <RouterLink :to="{name: 'spec-add'}" class="btn btn-primary">+ Make new specification</RouterLink>
     </div>
 </template>
@@ -21,10 +20,10 @@
 import { inject } from 'vue'
 import { ref } from 'vue'
 
-const store = inject('store')
+const store = <any>inject('store')
 const activeId = ref('')
+
+const getRowLabel = (item: string) => {
+    return store.formStructure.find((f: { name: string; })=>f.name===item)?.title || item;
+}
 </script>
-
-<style>
-
-</style>
